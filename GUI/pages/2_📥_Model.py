@@ -1,8 +1,8 @@
 import streamlit as st
 import pickle
 import pandas as pd
-from nltk.stem.porter import PorterStemmer
 import nltk
+from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
@@ -30,18 +30,16 @@ bert_tokenizer = BertTokenizer.from_pretrained('bert_model_files/')
 bert_model = BertForSequenceClassification.from_pretrained('bert_model_files/')
 
 def bert_predict(sentence):
-    # Encode the sentence using the BERT tokenizer
     inputs = bert_tokenizer.encode_plus(
         sentence, 
         return_tensors='pt', 
-        max_length=64,  # Adjust based on your training settings
+        max_length=64,
         padding='max_length', 
         truncation=True
     )
     input_ids = inputs['input_ids']
     attention_mask = inputs['attention_mask']
 
-    # Get the prediction from the BERT model
     with torch.no_grad():
         outputs = bert_model(input_ids, attention_mask=attention_mask)
         logits = outputs.logits
@@ -79,15 +77,9 @@ def predict_spam(sentence):
         results.append({'Model': model_name, 'Prediction': prediction_text})
     return results
 
-def get_filtered_data(grid_response):
-    # Use the response from the AgGrid to get the filtered data
-    return grid_response['data']
-
 def plot_chart(data):
-    # Calculate the proportion of sentences classified as spam by each model
     spam_proportions = data.groupby('Model')['Prediction'].apply(lambda x: (x == 'Likely a Spam').mean()).reset_index(name='Spam Proportion')
     
-    # Create an Altair chart
     chart = alt.Chart(spam_proportions).mark_bar().encode(
         x='Model',
         y='Spam Proportion',
@@ -99,8 +91,6 @@ def plot_chart(data):
     )
     
     st.altair_chart(chart, use_container_width=True)
-
-
 
 # Streamlit app
 st.title("Spam Detection Demo")
@@ -129,9 +119,8 @@ if st.button("Predict") or 'results_df' in st.session_state:
         all_results.extend(results)
 
     results_df = pd.DataFrame(all_results)
-    st.session_state['results_df'] = results_df  # Save results in session state
+    st.session_state['results_df'] = results_df
 
-    # Define custom cell style based on the prediction
     cell_style_jscode = JsCode("""
     function(params) {
         if (params.value === 'Likely a Spam') {
@@ -142,7 +131,6 @@ if st.button("Predict") or 'results_df' in st.session_state:
     };
     """)
 
-    # Configure the AgGrid component
     grid_options = {
         'columnDefs': [
             {'field': 'Sentence', 'filter': 'agTextColumnFilter', 'sortable': True, 'resizable': True},
@@ -157,7 +145,6 @@ if st.button("Predict") or 'results_df' in st.session_state:
         }
     }
 
-    # # Display the interactive dataframe for predictions
     grid_response = AgGrid(
         results_df, 
         gridOptions=grid_options, 
@@ -169,10 +156,8 @@ if st.button("Predict") or 'results_df' in st.session_state:
         key='predictions_grid'
     )
 
-    # Plot the chart with the initial data
     plot_chart(results_df)
 
-# Clear session state when the app is reloaded
 if st.button("Clear Results"):
     if 'results_df' in st.session_state:
         del st.session_state['results_df']

@@ -2,9 +2,8 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-# Load the evaluation metrics
+# Load the evaluation metrics and dataset
 metrics_df = pd.read_csv('extensive_training/classification_metrics.csv')
-# Load the dataset
 dataset_df = pd.read_csv('extensive_training/cleaned_dataset.csv')
 
 st.title("Model Evaluations")
@@ -48,19 +47,17 @@ def display_best_model():
         "GBDT": "Gradient Boosting Decision Tree",
         "xgb": "XGBoost"
     }
-
     best_model_full_name = classifier_full_names.get(best_model, best_model)
     st.markdown(f'<p style="background-color:#8bfa02;color:#000000;border-radius:10px; text-align:center; font-size:20px; padding:10px;">Based on the average of the metrics, the best model is: <strong>{best_model} ({best_model_full_name}) </strong></p>', unsafe_allow_html=True)
 
 display_best_model()
 
-# Create a table with the model names and evaluation results
 st.table(metrics_df.style.format({
-    'Model': '{:.2f}',  # Format the model column to two decimal places
-    'Accuracy': '{:.2%}',  # Format the accuracy column as a percentage
-    'Precision': '{:.2%}',  # Format the precision column as a percentage
-    'Recall': '{:.2%}',  # Format the recall column as a percentage
-    'F1 Score': '{:.2%}'  # Format the F1 score column as a percentage
+    'Model': '{:.2f}',
+    'Accuracy': '{:.2%}',
+    'Precision': '{:.2%}',
+    'Recall': '{:.2%}',
+    'F1 Score': '{:.2%}'
 }))
 
 def plot_chart(metric):
