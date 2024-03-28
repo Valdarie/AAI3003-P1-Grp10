@@ -53,7 +53,6 @@ def display_best_model():
 display_best_model()
 
 st.table(metrics_df.style.format({
-    'Model': '{:.2f}',
     'Accuracy': '{:.2%}',
     'Precision': '{:.2%}',
     'Recall': '{:.2%}',
@@ -73,11 +72,7 @@ def plot_chart(metric):
     )
     st.altair_chart(bars, use_container_width=True)
 
-def main():
-    plot_chart('Accuracy')
-    plot_chart('Precision')
-    plot_chart('Recall')
-    plot_chart('F1')
-
-if __name__ == "__main__":
-    main()
+plot_chart('Accuracy')
+plot_chart('Precision')
+plot_chart('Recall')
+plot_chart('F1')
