@@ -162,6 +162,8 @@ if st.button('Predict') or 'results_df' in st.session_state:
             }
         }
 
+        plot_chart(results_df)
+
         grid_response = AgGrid(
             results_df, 
             gridOptions=grid_options, 
@@ -173,7 +175,7 @@ if st.button('Predict') or 'results_df' in st.session_state:
             key='predictions_grid'
         )
 
-        plot_chart(results_df)
+        
     else:
         st.write('Please enter a sentence or upload a CSV file for prediction.')
 
