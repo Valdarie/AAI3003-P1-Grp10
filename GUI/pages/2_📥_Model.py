@@ -184,4 +184,4 @@ if st.button('Clear Results'):
         del st.session_state['results_df']
     if 'uploaded_file' in st.session_state:
         del st.session_state['uploaded_file']
-    st.experimental_rerun()
+    st.rerun()
