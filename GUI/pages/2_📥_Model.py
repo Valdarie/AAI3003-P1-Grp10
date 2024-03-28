@@ -26,11 +26,11 @@ def transform_text(text):
     return ' '.join(text)
 
 # Load the TfidfVectorizer and BERT model only once
-with open('extensive_training/models/tfid_vectorizer.pkl', 'rb') as file:
+with open('GUI/extensive_training/models/tfid_vectorizer.pkl', 'rb') as file:
     tfid = pickle.load(file)
 
-bert_tokenizer = BertTokenizer.from_pretrained('bert_model_files/')
-bert_model = BertForSequenceClassification.from_pretrained('bert_model_files/')
+bert_tokenizer = BertTokenizer.from_pretrained('GUI/bert_model_files/')
+bert_model = BertForSequenceClassification.from_pretrained('GUI/bert_model_files/')
 
 def bert_predict(sentence):
     inputs = bert_tokenizer.encode_plus(
@@ -52,16 +52,16 @@ def bert_predict(sentence):
     return 'Likely a Spam' if prediction == 1 else 'Likely Not a Spam'
 
 model_paths = {
-    'LogisticRegression': 'extensive_training/models/LR_model.pkl',
-    'SupportVectorMachine': 'extensive_training/models/SVC_model.pkl',
-    'MultinomialNB': 'extensive_training/models/NB_model.pkl',
-    'DecisionTreeClassifier': 'extensive_training/models/DT_model.pkl',
-    'AdaBoostClassifier': 'extensive_training/models/Adaboost_model.pkl',
-    'BaggingClassifier': 'extensive_training/models/Bgc_model.pkl',
-    'ExtraTreesClassifier': 'extensive_training/models/ETC_model.pkl',
-    'GradientBoostingClassifier': 'extensive_training/models/GBDT_model.pkl',
-    'XGBClassifier': 'extensive_training/models/xgb_model.pkl',
-    'RandomForestClassifier': 'extensive_training/models/RF_model.pkl',
+    'LogisticRegression': 'GUI/extensive_training/models/LR_model.pkl',
+    'SupportVectorMachine': 'GUI/extensive_training/models/SVC_model.pkl',
+    'MultinomialNB': 'GUI/extensive_training/models/NB_model.pkl',
+    'DecisionTreeClassifier': 'GUI/extensive_training/models/DT_model.pkl',
+    'AdaBoostClassifier': 'GUI/extensive_training/models/Adaboost_model.pkl',
+    'BaggingClassifier': 'GUI/extensive_training/models/Bgc_model.pkl',
+    'ExtraTreesClassifier': 'GUI/extensive_training/models/ETC_model.pkl',
+    'GradientBoostingClassifier': 'GUI/extensive_training/models/GBDT_model.pkl',
+    'XGBClassifier': 'GUI/extensive_training/models/xgb_model.pkl',
+    'RandomForestClassifier': 'GUI/extensive_training/models/RF_model.pkl',
     'BERT': 'bert'
 }
 

@@ -3,8 +3,8 @@ import pandas as pd
 import altair as alt
 
 # Load the evaluation metrics and dataset
-metrics_df = pd.read_csv('extensive_training/classification_metrics.csv')
-dataset_df = pd.read_csv('extensive_training/cleaned_dataset.csv')
+metrics_df = pd.read_csv('GUI/extensive_training/classification_metrics.csv')
+dataset_df = pd.read_csv('GUI/extensive_training/cleaned_dataset.csv')
 
 st.title("Model Evaluations")
 st.markdown("""
