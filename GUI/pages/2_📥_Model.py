@@ -125,6 +125,7 @@ if st.button('Predict') or 'results_df' in st.session_state:
             st.error(f'Error reading CSV file: {e}')
             sentences = []
     else:
+        st.write('### Prediction Results:')
         sentences = [sentence] if sentence else []
 
     if sentences:
